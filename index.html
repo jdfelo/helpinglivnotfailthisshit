@@ -1275,11 +1275,11 @@
                         'Authorization': `Bearer ${apiKey}`
                     },
                     body: JSON.stringify({
-                        model: 'gpt-3.5-turbo',
+                        model: 'gpt-4o',
                         messages: [
                             {
                                 role: 'system',
-                                content: 'You are a study helper. Compare the student answer to the correct answer. Reply ONLY with: "Correct!" if essentially right, or "Not quite. [one sentence about what was missing/wrong]". Be strict but fair - key concepts must be present.'
+                                content: 'You are a study helper. Compare the student answer to the correct answer. Reply ONLY with: "Correct!" if functionally correct, or "Not quite. and 1-4 sentences about what was missing/wrong you are a tutor here talking to the student". Be strict but fair - key concepts must be present.'
                             },
                             {
                                 role: 'user',
