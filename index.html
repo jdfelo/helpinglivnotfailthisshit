@@ -365,7 +365,7 @@
     <div class="container">
         <div class="header">
             <h1>Helping Liv not Fail This Shit</h1>
-            <p>with flash cards that talk back kind also maybe an algorithm that works?</p>
+            <p>with flash cards that talk back kinda also maybe an algorithm that works?</p>
             <p class="author-credit">by someone who thinks planes are cool</p>
         </div>
 
@@ -430,6 +430,7 @@
             <div class="buttons-container">
                 <button onclick="checkAnswer()" class="btn btn-primary">Check Answer</button>
                 <button onclick="flipCard()" class="btn btn-secondary">Reveal</button>
+                <button onclick="skipCard()" class="btn btn-secondary">Skip</button>
                 <button onclick="nextCard()" class="btn btn-success">Next →</button>
             </div>
 
@@ -1323,6 +1324,13 @@
 
         // Next card
         function nextCard() {
+            loadNextCard();
+        }
+
+        // Skip card
+        function skipCard() {
+            updateCardAfterReview(currentIndex, false); // Mark as incorrect
+            updateStats();
             loadNextCard();
         }
 
