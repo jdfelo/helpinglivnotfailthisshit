@@ -29,6 +29,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-left: 320px;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .container.menu-collapsed {
+            margin-left: 60px;
         }
 
         .header {
@@ -276,34 +282,382 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            position: relative;
         }
 
-        .category-selector select {
-            padding: 12px 20px;
+        .custom-dropdown {
+            position: relative;
+            min-width: 280px;
+        }
+
+        .dropdown-selected {
+            padding: 15px 45px 15px 20px;
             font-size: 0.95em;
-            border-radius: 8px;
-            border: 1px solid #1f2937;
-            background: #111111;
+            font-weight: 500;
+            border-radius: 12px;
+            border: 2px solid #1f2937;
+            background: linear-gradient(135deg, #111111, #1a1a1a);
             color: #fff;
             cursor: pointer;
-            transition: all 0.3s;
-            min-width: 250px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .category-selector select:hover {
+        .dropdown-selected::after {
+            content: '▼';
+            color: #3b82f6;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-selected:hover {
             border-color: #3b82f6;
+            background: linear-gradient(135deg, #1a1a1a, #222222);
+            box-shadow: 0 6px 12px rgba(59, 130, 246, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .dropdown-selected:hover::after {
+            color: #60a5fa;
+            transform: scale(1.1);
+        }
+
+        .dropdown-selected.open::after {
+            transform: rotate(180deg);
+            color: #60a5fa;
+        }
+
+        .dropdown-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .dropdown-options.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-option {
+            padding: 15px 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            border-bottom: 1px solid #2d2d2d;
+        }
+
+        .dropdown-option:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-option:hover {
+            background: linear-gradient(135deg, #2d2d2d, #3a3a3a);
+            color: #60a5fa;
+            padding-left: 25px;
+        }
+
+        .dropdown-option.selected {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+        }
+
+        .dropdown-option.selected:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            padding-left: 20px;
+        }
+
+        /* Custom scrollbar for dropdown */
+        .dropdown-options::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .dropdown-options::-webkit-scrollbar-track {
+            background: #2d2d2d;
+            border-radius: 3px;
+        }
+
+        .dropdown-options::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 3px;
+        }
+
+        .dropdown-options::-webkit-scrollbar-thumb:hover {
+            background: #60a5fa;
+        }
+        
+        /* Side Menu Styles */
+        .side-menu {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: #0f0f0f;
+            border-right: 1px solid #1f2937;
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .side-menu.collapsed {
+            transform: translateX(-240px);
+        }
+        
+        .menu-toggle {
+            position: absolute;
+            right: -40px;
+            top: 20px;
+            width: 35px;
+            height: 35px;
+            background: #111111;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: #3b82f6;
+            font-size: 1.2em;
+            z-index: 101;
+        }
+        
+        .menu-toggle:hover {
+            background: #1a1a1a;
+            border-color: #3b82f6;
+            transform: scale(1.05);
+        }
+        
+        .menu-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid #1f2937;
+            background: linear-gradient(135deg, #111111, #1a1a1a);
+        }
+        
+        .menu-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #3b82f6;
+            margin-bottom: 5px;
+        }
+        
+        .menu-subtitle {
+            font-size: 0.85em;
+            color: #6b7280;
+        }
+        
+        .exam-folder {
+            margin: 10px;
+        }
+        
+        .exam-header {
+            padding: 12px 15px;
+            background: #111111;
+            border: 1px solid #1f2937;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            margin-bottom: 5px;
+        }
+        
+        .exam-header:hover {
+            background: #1a1a1a;
+            border-color: #3b82f6;
+        }
+        
+        .exam-header.active {
+            background: linear-gradient(135deg, #1a1a1a, #222222);
+            border-color: #3b82f6;
+        }
+        
+        .exam-name {
+            color: #fff;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .exam-name::before {
+            content: '📚';
+        }
+        
+        .exam-arrow {
+            color: #6b7280;
+            transition: transform 0.3s ease;
+            font-size: 0.8em;
+        }
+        
+        .exam-header.active .exam-arrow {
+            transform: rotate(90deg);
+            color: #3b82f6;
+        }
+        
+        .chapter-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .chapter-list.open {
+            max-height: 2000px;
+        }
+        
+        .chapter-folder {
+            margin-left: 15px;
+            margin-bottom: 5px;
+        }
+        
+        .chapter-header {
+            padding: 10px 15px;
+            background: #0a0a0a;
+            border: 1px solid #1f2937;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            margin-bottom: 3px;
+        }
+        
+        .chapter-header:hover {
+            background: #111111;
+            border-color: #374151;
+            transform: translateX(3px);
+        }
+        
+        .chapter-header.active {
+            background: #1a1a1a;
+            border-color: #3b82f6;
+        }
+        
+        .chapter-name {
+            color: #9ca3af;
+            font-size: 0.9em;
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .chapter-count {
+            background: #1f2937;
+            color: #6b7280;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            margin-right: 8px;
+        }
+        
+        .chapter-arrow {
+            color: #4b5563;
+            font-size: 0.7em;
+            transition: transform 0.3s ease;
+        }
+        
+        .chapter-header.active .chapter-arrow {
+            transform: rotate(90deg);
+            color: #3b82f6;
+        }
+        
+        .card-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-left: 15px;
+        }
+        
+        .card-list.open {
+            max-height: 1500px;
+        }
+        
+        .card-item {
+            padding: 8px 15px;
+            background: #050505;
+            border-left: 2px solid #1f2937;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #6b7280;
+            font-size: 0.85em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+        
+        .card-item:hover {
+            background: #0a0a0a;
+            border-left-color: #3b82f6;
+            color: #9ca3af;
+            padding-left: 20px;
+        }
+        
+        .card-item.current {
+            background: linear-gradient(90deg, #3b82f6, transparent);
+            border-left-color: #60a5fa;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .card-status {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .card-status.learned {
+            background: #34d399;
+        }
+        
+        .card-status.reviewing {
+            background: #fbbf24;
+        }
+        
+        .card-status.new {
+            background: #6b7280;
+        }
+        
+        /* Scrollbar for side menu */
+        .side-menu::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .side-menu::-webkit-scrollbar-track {
             background: #0a0a0a;
         }
-
-        .category-selector select:focus {
-            outline: none;
-            border-color: #3b82f6;
+        
+        .side-menu::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 3px;
         }
-
-        .category-selector select option {
-            background: #111111;
-            color: #fff;
-            padding: 10px;
+        
+        .side-menu::-webkit-scrollbar-thumb:hover {
+            background: #374151;
         }
 
         .setup-container {
@@ -341,6 +695,20 @@
             border-color: #3b82f6;
         }
 
+        @media (max-width: 768px) {
+            .side-menu {
+                transform: translateX(-240px);
+            }
+            
+            .container {
+                margin-left: 60px;
+            }
+            
+            .container.menu-collapsed {
+                margin-left: 60px;
+            }
+        }
+        
         @media (max-width: 640px) {
             .header h1 {
                 font-size: 2em;
@@ -358,11 +726,40 @@
                 min-width: 120px;
                 padding: 12px 20px;
             }
+            
+            .container {
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            
+            .menu-toggle {
+                right: -30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Side Menu -->
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-toggle" onclick="toggleSideMenu()">
+            <span id="menuIcon">◀</span>
+        </div>
+        <div class="menu-header">
+            <div class="menu-title">Study Navigation</div>
+            <div class="menu-subtitle">Browse all flashcards</div>
+        </div>
+        <div class="exam-folder">
+            <div class="exam-header" onclick="toggleExam()" id="examHeader">
+                <span class="exam-name">Anatomy & Physiology Exam</span>
+                <span class="exam-arrow">▶</span>
+            </div>
+            <div class="chapter-list" id="chapterList">
+                <!-- Chapters will be dynamically generated here -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" id="mainContainer">
         <div class="header">
             <h1>Helping Liv not Fail This Shit</h1>
             <p>with flash cards that talk back kinda also maybe an algorithm that works?</p>
@@ -401,15 +798,20 @@
             </div>
 
             <div class="category-selector">
-                <select id="categorySelect" onchange="changeCategory()">
-                    <option value="all">All Topics</option>
-                    <option value="chapter1">Chapter 1: Human Body</option>
-                    <option value="chapter2">Chapter 2: Chemistry</option>
-                    <option value="chapter3">Chapter 3: Cells</option>
-                    <option value="chapter4">Chapter 4: Tissues</option>
-                    <option value="chapter5">Chapter 5: Integumentary</option>
-                    <option value="chapter16">Chapter 16: Endocrine</option>
-                </select>
+                <div class="custom-dropdown" id="customDropdown">
+                    <div class="dropdown-selected" onclick="toggleDropdown()">
+                        <span id="selectedText">All Topics</span>
+                    </div>
+                    <div class="dropdown-options" id="dropdownOptions">
+                        <div class="dropdown-option selected" data-value="all" onclick="selectOption('all', 'All Topics')">All Topics</div>
+                        <div class="dropdown-option" data-value="chapter1" onclick="selectOption('chapter1', 'Chapter 1: Human Body')">Chapter 1: Human Body</div>
+                        <div class="dropdown-option" data-value="chapter2" onclick="selectOption('chapter2', 'Chapter 2: Chemistry')">Chapter 2: Chemistry</div>
+                        <div class="dropdown-option" data-value="chapter3" onclick="selectOption('chapter3', 'Chapter 3: Cells')">Chapter 3: Cells</div>
+                        <div class="dropdown-option" data-value="chapter4" onclick="selectOption('chapter4', 'Chapter 4: Tissues')">Chapter 4: Tissues</div>
+                        <div class="dropdown-option" data-value="chapter5" onclick="selectOption('chapter5', 'Chapter 5: Integumentary')">Chapter 5: Integumentary</div>
+                        <div class="dropdown-option" data-value="chapter16" onclick="selectOption('chapter16', 'Chapter 16: Endocrine')">Chapter 16: Endocrine</div>
+                    </div>
+                </div>
             </div>
 
             <div class="flashcard-container">
@@ -1135,6 +1537,7 @@
                 document.getElementById('setup').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
                 initializeApp();
+                buildSideMenu();
             } else {
                 alert('Please enter your API key');
             }
@@ -1188,7 +1591,7 @@
         // Get cards for review
         function getCardsForReview() {
             const now = Date.now();
-            const category = document.getElementById('categorySelect').value;
+            const category = currentCategory;
             
             let cards = flashcards.map((card, index) => ({
                 ...card,
@@ -1232,6 +1635,7 @@
             document.getElementById('flashcard').classList.remove('flipped');
             
             updateStats();
+            updateCurrentCardHighlight();
         }
 
         // Update statistics
@@ -1341,9 +1745,182 @@
             }
         }
 
-        // Change category
+        // Custom dropdown functionality
+        let currentCategory = 'all';
+        
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownOptions');
+            const selected = document.querySelector('.dropdown-selected');
+            
+            dropdown.classList.toggle('show');
+            selected.classList.toggle('open');
+        }
+        
+        function selectOption(value, text) {
+            currentCategory = value;
+            document.getElementById('selectedText').textContent = text;
+            
+            // Update selected state
+            document.querySelectorAll('.dropdown-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-value="${value}"]`).classList.add('selected');
+            
+            // Close dropdown
+            document.getElementById('dropdownOptions').classList.remove('show');
+            document.querySelector('.dropdown-selected').classList.remove('open');
+            
+            // Load next card with new category
+            loadNextCard();
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('customDropdown');
+            if (dropdown && !dropdown.contains(event.target)) {
+                document.getElementById('dropdownOptions').classList.remove('show');
+                document.querySelector('.dropdown-selected').classList.remove('open');
+            }
+        });
+
+        // Change category (updated for custom dropdown)
         function changeCategory() {
             loadNextCard();
+        }
+
+        // Side Menu Functions
+        function toggleSideMenu() {
+            const menu = document.getElementById('sideMenu');
+            const container = document.getElementById('mainContainer');
+            const icon = document.getElementById('menuIcon');
+            
+            menu.classList.toggle('collapsed');
+            container.classList.toggle('menu-collapsed');
+            
+            if (menu.classList.contains('collapsed')) {
+                icon.textContent = '▶';
+            } else {
+                icon.textContent = '◀';
+            }
+        }
+        
+        function toggleExam() {
+            const examHeader = document.getElementById('examHeader');
+            const chapterList = document.getElementById('chapterList');
+            
+            examHeader.classList.toggle('active');
+            chapterList.classList.toggle('open');
+        }
+        
+        function toggleChapter(chapterId) {
+            const chapterHeader = document.getElementById(`chapter-header-${chapterId}`);
+            const cardList = document.getElementById(`card-list-${chapterId}`);
+            
+            // Close all other chapters
+            document.querySelectorAll('.chapter-header').forEach(header => {
+                if (header.id !== `chapter-header-${chapterId}`) {
+                    header.classList.remove('active');
+                }
+            });
+            
+            document.querySelectorAll('.card-list').forEach(list => {
+                if (list.id !== `card-list-${chapterId}`) {
+                    list.classList.remove('open');
+                }
+            });
+            
+            chapterHeader.classList.toggle('active');
+            cardList.classList.toggle('open');
+        }
+        
+        function goToCard(cardIndex) {
+            currentIndex = cardIndex;
+            currentCard = flashcards[cardIndex];
+            
+            document.getElementById('questionText').textContent = currentCard.question;
+            document.getElementById('answerText').textContent = currentCard.answer;
+            document.getElementById('userAnswer').value = '';
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('flashcard').classList.remove('flipped');
+            
+            updateStats();
+            updateCurrentCardHighlight();
+        }
+        
+        function updateCurrentCardHighlight() {
+            // Remove all current highlights
+            document.querySelectorAll('.card-item').forEach(item => {
+                item.classList.remove('current');
+            });
+            
+            // Add current highlight
+            const currentCardElement = document.getElementById(`card-${currentIndex}`);
+            if (currentCardElement) {
+                currentCardElement.classList.add('current');
+            }
+        }
+        
+        function buildSideMenu() {
+            const chapters = {
+                'chapter1': { name: 'Chapter 1: Human Body', cards: [] },
+                'chapter2': { name: 'Chapter 2: Chemistry', cards: [] },
+                'chapter3': { name: 'Chapter 3: Cells', cards: [] },
+                'chapter4': { name: 'Chapter 4: Tissues', cards: [] },
+                'chapter5': { name: 'Chapter 5: Integumentary', cards: [] },
+                'chapter16': { name: 'Chapter 16: Endocrine', cards: [] }
+            };
+            
+            // Group cards by chapter
+            flashcards.forEach((card, index) => {
+                if (chapters[card.category]) {
+                    chapters[card.category].cards.push({ ...card, index });
+                }
+            });
+            
+            let menuHTML = '';
+            
+            Object.keys(chapters).forEach(chapterId => {
+                const chapter = chapters[chapterId];
+                if (chapter.cards.length === 0) return;
+                
+                menuHTML += `
+                    <div class="chapter-folder">
+                        <div class="chapter-header" id="chapter-header-${chapterId}" onclick="toggleChapter('${chapterId}')">
+                            <span class="chapter-name">${chapter.name}</span>
+                            <span class="chapter-count">${chapter.cards.length}</span>
+                            <span class="chapter-arrow">▶</span>
+                        </div>
+                        <div class="card-list" id="card-list-${chapterId}">
+                `;
+                
+                chapter.cards.forEach(card => {
+                    const data = cardData[card.index];
+                    let statusClass = 'new';
+                    if (data && data.correctStreak >= 3) {
+                        statusClass = 'learned';
+                    } else if (data && data.repetitions > 0) {
+                        statusClass = 'reviewing';
+                    }
+                    
+                    const truncatedQuestion = card.question.length > 35 
+                        ? card.question.substring(0, 35) + '...' 
+                        : card.question;
+                    
+                    menuHTML += `
+                        <div class="card-item" id="card-${card.index}" onclick="goToCard(${card.index})">
+                            <span class="card-status ${statusClass}"></span>
+                            ${truncatedQuestion}
+                        </div>
+                    `;
+                });
+                
+                menuHTML += `
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('chapterList').innerHTML = menuHTML;
         }
 
         // Initialize on load
@@ -1354,6 +1931,7 @@
                 document.getElementById('setup').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
                 initializeApp();
+                buildSideMenu();
             }
         };
     </script>
